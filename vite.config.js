@@ -5,6 +5,9 @@ import vue from '@vitejs/plugin-vue'
 
 
 export default defineConfig({
+    esbuild: {
+        logOverride: { "css-syntax-error": "silent" },
+    },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
