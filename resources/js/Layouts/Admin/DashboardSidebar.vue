@@ -34,7 +34,7 @@
                             <template v-if="isExpanded || isHovered || isMobileOpen">
                                 {{ menuGroup.title }}
                             </template>
-                            <HorizontalDots v-else />
+                            <span v-else>...</span>
                         </h2>
                         <ul class="flex flex-col gap-4">
                             <li v-for="(item, index) in menuGroup.items" :key="item.name">
@@ -91,7 +91,7 @@
                                         ">
                                         <ul class="mt-2 space-y-1 ml-9">
                                             <li v-for="subItem in item.subItems" :key="subItem.name">
-                                                <router-link :to="subItem.path" :class="[
+                                                <div :to="subItem.path" :class="[
                                                     'menu-dropdown-item',
                                                     {
                                                         'menu-dropdown-item-active': isActive(
@@ -104,7 +104,7 @@
                                                 ]">
                                                     {{ subItem.name }}
                                                     <span class="flex items-center gap-1 ml-auto">
-                                                        <span v-if="subItem.new" :class="[
+                                                        <span v-if="subItemExists(subItem)" :class="[
                                                             'menu-dropdown-badge',
                                                             {
                                                                 'menu-dropdown-badge-active': isActive(
@@ -131,7 +131,7 @@
                                                             pro
                                                         </span>
                                                     </span>
-                                                </router-link>
+                                                </div>
                                             </li>
                                         </ul>
                                     </div>
@@ -145,7 +145,7 @@
     </aside>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 import { GridIcon, CalenderIcon, SettingsIcon, ListIcon, TableIcon, PageIcon } from "../../../icons"
 import { useSidebar } from "../../Composables/useSidebar";
@@ -199,9 +199,9 @@ const menuGroups = [
     },
 ];
 
-const isActive = (path) => route === path;
+const isActive = (path: any) => route === path;
 
-const toggleSubmenu = (groupIndex, itemIndex) => {
+const toggleSubmenu = (groupIndex: any, itemIndex: any) => {
     const key = `${groupIndex}-${itemIndex}`;
     openSubmenu.value = openSubmenu.value === key ? null : key;
 };
@@ -209,13 +209,13 @@ const toggleSubmenu = (groupIndex, itemIndex) => {
 const isAnySubmenuRouteActive = computed(() => {
     return menuGroups.some((group) =>
         group.items.some(
-            (item) =>
-                item.subItems && item.subItems.some((subItem) => isActive(subItem.path))
+            (item: any) =>
+                item.subItems && item.subItems.some((subItem: any) => isActive(subItem.path))
         )
     );
 });
 
-const isSubmenuOpen = (groupIndex, itemIndex) => {
+const isSubmenuOpen = (groupIndex: any, itemIndex: any) => {
     const key = `${groupIndex}-${itemIndex}`;
     return (
         openSubmenu.value === key ||
@@ -226,7 +226,7 @@ const isSubmenuOpen = (groupIndex, itemIndex) => {
     );
 };
 
-const startTransition = (el) => {
+const startTransition = (el: any) => {
     el.style.height = "auto";
     const height = el.scrollHeight;
     el.style.height = "0px";
@@ -234,7 +234,11 @@ const startTransition = (el) => {
     el.style.height = height + "px";
 };
 
-const endTransition = (el) => {
+const endTransition = (el: any) => {
     el.style.height = "";
 };
+
+const subItemExists = (subItem: any) => {
+    return subItem.new ?? false
+}
 </script>

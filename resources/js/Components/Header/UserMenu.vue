@@ -38,12 +38,12 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ChevronDownIcon } from '../../../icons'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, type Ref } from 'vue'
 
-const dropdownOpen = ref(false)
-const dropdownRef = ref(null)
+const dropdownOpen: Ref<boolean> = ref(false)
+const dropdownRef: Ref<any> = ref(null)
 
 const menuItems = [
     { href: '/profile', icon: "UserCircleIcon", text: 'Edit profile' },
@@ -65,7 +65,7 @@ const signOut = () => {
     closeDropdown()
 }
 
-const handleClickOutside = (event) => {
+const handleClickOutside = (event: any) => {
     if (dropdownRef.value && !dropdownRef.value.contains(event.target)) {
         closeDropdown()
     }

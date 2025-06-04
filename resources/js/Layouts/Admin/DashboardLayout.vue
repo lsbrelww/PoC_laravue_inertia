@@ -12,7 +12,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import DashboardSidebar from './DashboardSidebar.vue';
 import AppHeader from './AppHeader.vue'
 import { useSidebar } from '../../Composables/useSidebar'

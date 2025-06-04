@@ -4,8 +4,6 @@ import '../css/main.css'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import 'jsvectormap/dist/jsvectormap.css'
-import 'flatpickr/dist/flatpickr.css'
 
 createInertiaApp({
     resolve: name => {
