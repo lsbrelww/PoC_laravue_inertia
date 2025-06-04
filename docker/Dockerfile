@@ -1,34 +1,27 @@
 FROM php:8.3-fpm
 
-ARG SERVICE_PORT=8000
-ENV SERVICE_PORT=${SERVICE_PORT}
-
-# Install system dependencies & clear cache in one step to reduce image size
+# instalando dependencias do sistema
 RUN apt update && apt install -y \
-    git curl libonig-dev libxml2-dev libzip-dev \
-    libpq-dev libicu-dev libfreetype6-dev \
-    libjpeg62-turbo-dev libpng-dev libxslt-dev unzip \
-    && rm -rf /var/lib/apt/lists/*
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    libc-client-dev \
+    libkrb5-dev \
+    libzip-dev \
+    libpq-dev
 
-# Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+# limpando o cache
+RUN apt clean && rm -rf /var/lib/apt/lists/*
 
-# Install Redis
-RUN pecl install redis && docker-php-ext-enable redis
+# instalando extensões do php
+RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd imap zip pgsql pdo_pgsql
 
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Set working directory
+# definindo app como diretorio principal de trabalho
 WORKDIR /app
 
-# Export port
-EXPOSE ${SERVICE_PORT}
-
-# Optimize Composer usage
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
-# Run server on container start
-CMD composer install --no-dev --prefer-dist --no-interaction && \
-    php artisan serve --host=0.0.0.0 --port=${SERVICE_PORT}
+CMD php artisan serve --host=0.0.0.0 --port=8000

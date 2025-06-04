@@ -7,7 +7,7 @@ const events = usePage().props.events
 </script>
 
 <template>
-    <h1>Welcome</h1>
+    <h1 class="text-uppercase">Welcome</h1>
     <p>{{ events }}</p>
     <p>Count: {{ data }}</p>
     <button @click="data++">Increment</button>
