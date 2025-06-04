@@ -1,0 +1,47 @@
+services:
+
+  laravel-intertia:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: inertia_poc
+    volumes:
+      - ./:/app
+    ports:
+      - "8050:8000"
+    depends_on:
+      - inertia-db
+      - inertia-redis
+    networks:
+      - inertia
+
+  inertia-db:
+    image: mariadb:latest
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: inertia_poc_db
+    ports:
+      - "33078:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: inertia
+    volumes:
+      - inertia_poc_db:/var/lib/mysql
+    networks:
+      - inertia
+
+  inertia-redis:
+    image: redis:7.0.2
+    container_name: inertia_poc_redis
+    ports:
+      - "63898:6379"
+    volumes:
+      - inertia_poc_redis:/data
+    networks:
+      - inertia
+networks:
+  inertia:
+    driver: bridge
+
+volumes:
+  inertia_poc_db:
+  inertia_poc_redis:
