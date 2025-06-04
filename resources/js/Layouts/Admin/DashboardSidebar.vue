@@ -67,7 +67,7 @@
                                         },
                                     ]" />
                                 </button>
-                                <div v-else-if="item.path" :to="item.path" :class="[
+                                <a v-else-if="item.path" :href="item.path" :class="[
                                     'menu-item group',
                                     {
                                         'menu-item-active': isActive(item.path),
@@ -83,7 +83,7 @@
                                     </span>
                                     <span v-if="isExpanded || isHovered || isMobileOpen" class="menu-item-text">{{
                                         item.name }}</span>
-                                </div>
+                                </a>
                                 <transition @enter="startTransition" @after-enter="endTransition"
                                     @before-leave="startTransition" @after-leave="endTransition">
                                     <div v-show="isSubmenuOpen(groupIndex, index) &&
@@ -91,7 +91,7 @@
                                         ">
                                         <ul class="mt-2 space-y-1 ml-9">
                                             <li v-for="subItem in item.subItems" :key="subItem.name">
-                                                <div :to="subItem.path" :class="[
+                                                <a :href="subItem.path" :class="[
                                                     'menu-dropdown-item',
                                                     {
                                                         'menu-dropdown-item-active': isActive(
@@ -131,7 +131,7 @@
                                                             pro
                                                         </span>
                                                     </span>
-                                                </div>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -162,12 +162,12 @@ const menuGroups = [
             {
                 icon: GridIcon,
                 name: "Dashboard",
-                subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+                subItems: [{ name: "Ecommerce", path: "/show", pro: false }],
             },
             {
                 icon: CalenderIcon,
                 name: "Calendar",
-                path: "/calendar",
+                path: "/home",
             },
             {
                 icon: SettingsIcon,

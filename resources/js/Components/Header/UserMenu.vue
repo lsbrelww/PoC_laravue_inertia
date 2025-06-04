@@ -1,7 +1,7 @@
 <template>
     <div class="relative" ref="dropdownRef">
         <button class="flex items-center text-gray-700 dark:text-gray-400" @click.prevent="toggleDropdown">
-            <span class="block mr-1 font-medium text-theme-sm">nome_usuario</span>
+            <span class="block mr-1 font-medium text-theme-sm">{{loggedUser.name}}</span>
 
             <ChevronDownIcon :class="{ 'rotate-180': dropdownOpen }" />
         </button>
@@ -39,11 +39,13 @@
 </template>
 
 <script setup lang="ts">
+import { usePage } from '@inertiajs/vue3'
 import { ChevronDownIcon } from '../../../icons'
 import { ref, onMounted, onUnmounted, type Ref } from 'vue'
 
 const dropdownOpen: Ref<boolean> = ref(false)
 const dropdownRef: Ref<any> = ref(null)
+const loggedUser: any = usePage().props.auth
 
 const menuItems = [
     { href: '/profile', icon: "UserCircleIcon", text: 'Edit profile' },

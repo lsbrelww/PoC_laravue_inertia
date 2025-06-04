@@ -6,7 +6,7 @@ import SidebarProvider from '../../Components/SidebarProvider.vue'
 import ThemeProvider from '../../Components/ThemeProvider.vue'
 
 const data = ref(0)
-const events = usePage().props.events
+const users = usePage().props.users
 </script>
 
 <template>
@@ -14,10 +14,7 @@ const events = usePage().props.events
         <SidebarProvider>
             <DashboardLayout>
                 <div>
-                    <h1 class="uppercase">Welcome</h1>
-                    <p>{{ events }}</p>
-                    <p>Count: {{ data }}</p>
-                    <button @click="data++" class="bg-emerald-300">Increment</button>
+                    {{ users }}
                 </div>
             </DashboardLayout>
         </SidebarProvider>
