@@ -13,7 +13,7 @@ class HomeController extends Controller
         // executado como server side
         $users = User::all();
 
-        return Inertia::render("Home/HomeView", [
+        return Inertia::render("Admin/DashboardView", [
             "users" => $users
         ]);
     }
